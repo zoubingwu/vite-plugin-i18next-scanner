@@ -1,0 +1,52 @@
+{
+  "name": "vite-plugin-i18next-scanner",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "watch": "tsup --watch",
+    "fmt": "prettier src/ --write"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.7",
+    "@types/lodash": "^4.14.177",
+    "@types/node": "^16.11.10",
+    "@types/vinyl-fs": "^2.4.12",
+    "@types/workerpool": "^6.1.0",
+    "debug": "^4.3.3",
+    "detect-indent": "^7.0.0",
+    "husky": "^7.0.4",
+    "i18next-scanner": "^3.1.0",
+    "lodash": "^4.17.21",
+    "prettier": "^2.5.0",
+    "pretty-quick": "^3.1.2",
+    "tsup": "^5.10.0",
+    "typescript": "^4.5.2",
+    "vinyl-fs": "^3.0.3",
+    "vite": "^2.6.14",
+    "workerpool": "^6.1.5"
+  },
+  "peerDependencies": {
+    "vite": ">=2"
+  },
+  "sideEffect": false,
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "vite-plugin",
+    "i18n",
+    "i18next",
+    "react-i18next",
+    "i18next-scanner",
+    "react"
+  ]
+}
