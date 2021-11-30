@@ -30,7 +30,7 @@ export interface PluginOptions {
   // Files to be scanned, support glob pattern. default is `[./src/**/*.{ts,tsx,js,jsx}]`
   includes?: string[];
   
-  // it will generate `{langs}.json` files under `outDir`
+  // it will generate `{langs}.json` files under `outDir`, default is `./locales`
   outDir?: string;
 }
 ```
