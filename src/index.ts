@@ -10,6 +10,7 @@ export function i18nextScanner(options?: PluginOptions): Plugin {
 
   return {
     name: 'vite-plugin-i18next-scanner',
+    apply: 'serve',
     async configureServer(server) {
       await ctx.configureServer(server);
     },
