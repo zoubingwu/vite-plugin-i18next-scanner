@@ -2,7 +2,7 @@ import fs from 'fs';
 import { ViteDevServer } from 'vite';
 import { Parser } from 'i18next-scanner';
 import debug from 'debug';
-import workerpool from 'workerpool';
+import workerpool, { WorkerPool } from 'workerpool';
 
 import { ScannerOptions, PluginOptions, normalizeOptions } from './options';
 import path from 'path';
@@ -14,10 +14,7 @@ export class Context {
   private server: ViteDevServer | null = null;
   private readonly scannerOptions: ScannerOptions;
   private readonly pluginOptions: PluginOptions;
-  private readonly pool = workerpool.pool(__dirname + '/worker.js', {
-    minWorkers: 'max',
-    maxWorkers: 1,
-  });
+  private pool: WorkerPool | null = null;
 
   public constructor(options: PluginOptions = {}) {
     this.pluginOptions = options;
@@ -25,16 +22,28 @@ export class Context {
     dbg('scannerOptions: %o', this.scannerOptions);
   }
 
-  public async configureServer(server: ViteDevServer) {
+  public async startScanner(server: ViteDevServer) {
     if (this.server === server) {
       return;
     }
 
+    if (this.pool) {
+      this.pool.terminate();
+    }
+
     this.server = server;
+    this.pool = workerpool.pool(__dirname + '/worker.js', {
+      minWorkers: 'max',
+      maxWorkers: 1,
+    });
 
     await this.scanAll();
 
     this.watch(server.watcher);
+  }
+
+  public async closeScanner() {
+    await this.pool?.terminate();
   }
 
   private watch(watcher: fs.FSWatcher) {
@@ -107,6 +116,10 @@ export class Context {
   }
 
   private async scanAll() {
+    if (!this.pool) {
+      return;
+    }
+
     dbg('scanning and regenerating all resources...');
     const worker = await this.pool.proxy();
 
