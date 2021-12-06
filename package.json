@@ -10,6 +10,11 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "readme": "https://github.com/zoubingwu/vite-plugin-i18next-scanner#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zoubingwu/vite-plugin-i18next-scanner.git"
+  },
   "scripts": {
     "build": "tsup",
     "watch": "tsup --watch",
